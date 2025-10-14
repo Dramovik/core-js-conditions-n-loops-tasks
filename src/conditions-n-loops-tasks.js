@@ -432,8 +432,78 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+
+// function sortByAsc(arr) {
+//   const pointIndex = Math.floor(arr.length / 2);
+//   const point = arr[pointIndex];
+//   let left = [];
+//   let right = [];
+//   for (let i = 0; i < arr.length; i += 1) {
+//     if (i !== pointIndex) {
+//       if (arr[i] < point) {
+//         left[left.length] = arr[i];
+//       } else {
+//         right[right.length] = arr[i];
+//       }
+//     }
+//   }
+//   if (left.length > 1) {
+//     left = sortByAsc(left);
+//   }
+//   if (right.length > 1) {
+//     right = sortByAsc(right);
+//   }
+//   return [...left, point, ...right]
+// }
+
+// function sortByAsc(arr) {
+//   const copyArr = arr;
+//   function quickSort(start, end) {
+//     const pivotIndex = Math.floor((end - start) / 2) + start;
+//     const pivot = arr[pivotIndex];
+//     let leftIndex = start;
+//     let rightIndex = pivotIndex + 1;
+
+//     for (let i = start; i < end; i += 1) {
+//       if (i !== pivotIndex) {
+//         if (arr[i] < pivot) {
+//           const temp = arr[i]
+//           arr[i] = arr[leftIndex];
+//           arr[leftIndex] = temp;
+//           leftIndex += 1;
+//         }
+//       }
+//     }
+//   }
+// }
+
+function sortByAsc(arr) {
+  const a = arr;
+  function quickSort(left, right) {
+    if (left >= right) return;
+
+    const pivot = a[Math.floor((left + right) / 2)];
+    let i = left;
+    let j = right;
+
+    while (i <= j) {
+      while (a[i] < pivot) i += 1;
+      while (a[j] > pivot) j -= 1;
+      if (i <= j) {
+        const temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+        i += 1;
+        j -= 1;
+      }
+    }
+
+    quickSort(left, j);
+    quickSort(i, right);
+  }
+
+  quickSort(0, a.length - 1);
+  return a;
 }
 
 /**
