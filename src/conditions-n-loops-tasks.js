@@ -523,9 +523,52 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let realIterations = !iterations ? 0 : iterations;
+  let result = str;
+  let cycle = false;
+
+  for (let i = 0; i < realIterations; i += 1) {
+    let even = '';
+    let odd = '';
+    for (let j = 0; j < str.length; j += 1) {
+      if (j % 2 === 0) {
+        even = `${even}${result[j]}`;
+      } else {
+        odd = `${odd}${result[j]}`;
+      }
+    }
+    result = `${even}${odd}`;
+    if (!cycle && result === str) {
+      realIterations = iterations % (i + 1);
+      i = -1;
+      cycle = true;
+    }
+  }
+  return result;
 }
+// 0 12345678
+// 1 13572468
+// 2 15263748
+// 3 12345678
+
+// 0 123456
+// 1 135246
+// 2 154326
+// 3 142536
+// 4 123456
+
+// 0 1234
+// 1 1324
+// 2 1234
+
+// 0 1234567891
+// 1 1357924681
+// 2 1594837261
+// 3 1987654321
+// 4 1864297531
+// 5 1627384951
+// 6 1234567891
 
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
